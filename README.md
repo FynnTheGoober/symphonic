@@ -1,4 +1,4 @@
-## Discord Bot (discord.js + TypeScript)
+## Discord Music Bot (discord.js + TypeScript)
 
 ### Prerequisites
 - Node.js `>=18.17` (recommend Node 20 LTS)
@@ -17,7 +17,7 @@
 ### 3) Install & run
 ```
 npm install
-npm run register:commands   # deploys /ping (guild-scoped if GUILD_ID is set)
+npm run register:commands   # deploys music commands (guild-scoped if GUILD_ID is set)
 npm run dev                 # starts the bot with hot-reload
 ```
 
@@ -28,17 +28,19 @@ Then open the generated URL to add the bot to your server.
 
 ### Scripts
 - `dev`: Runs the bot via tsx with file watching.
-- `register:commands`: Registers the sample `/ping` slash command.
+- `register:commands`: Registers the slash commands (`/join`, `/play`, `/skip`, `/stop`, `/queue`, `/leave`, `/ping`).
 - `build`: Compiles TypeScript to `dist/`.
 - `start`: Runs the compiled JavaScript from `dist/`.
 
 ### Project Structure
-- `src/index.ts`: Bot entrypoint; logs in and handles `/ping`.
+- `src/index.ts`: Bot entrypoint; logs in and routes slash commands.
 - `src/register-commands.ts`: Registers slash commands via Discord REST API.
+- `src/music/manager.ts`: Minimal playback queue, connection, and track helper using `@discordjs/voice` + `play-dl`.
+- `src/commands/`: Slash command implementations.
 - `.env`: Secrets (token, app ID, optional guild ID).
 - `tsconfig.json`: TypeScript config using ESM (`NodeNext`).
 
 ### Notes
 - Global command changes can take up to 1 hour to appear. Use `GUILD_ID` during development for immediate updates.
 - Keep your bot token secret. Never commit `.env`.
-
+- `play-dl` can use optional env vars (e.g., `YOUTUBE_COOKIE`, `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`). Most basic playback works without them.
